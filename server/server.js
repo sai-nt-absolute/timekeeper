@@ -19,7 +19,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/timekeepe
 
 // API Routes
 app.use('/api/watches', require('./routes/watchRoutes'));
-app.use('/api/auth', require('./routes/authRoutes'));
+// Comment out the auth route since we're handling it differently
+// app.use('/api/auth', require('./routes/authRoutes'));
 
 // Serve React app
 if (process.env.NODE_ENV === 'production') {
@@ -33,3 +34,5 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(PORT, () => {
   console.log(`Time Keeper server running on port ${PORT}`);
 });
+
+module.exports = app;
