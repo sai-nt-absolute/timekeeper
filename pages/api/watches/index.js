@@ -1,5 +1,5 @@
-import { connectDB } from "../../../../lib/db";
-import Watch from "../../../../lib/models/Watch";
+import { connectDB } from "../../../lib/db";
+import Watch from "../../../lib/models/Watch";
 
 export default async function handler(req, res) {
   await connectDB();
