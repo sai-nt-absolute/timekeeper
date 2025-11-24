@@ -1,4 +1,4 @@
-// server/server.js
+// server/server.js (Clean version)
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -17,10 +17,10 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/timekeepe
   useUnifiedTopology: true,
 });
 
-// API Routes
+// API Routes - ONLY keep what you actually need
 app.use('/api/watches', require('./routes/watchRoutes'));
-// Comment out the auth route since we're handling it differently
-// app.use('/api/auth', require('./routes/authRoutes'));
+// DON'T include this line if you don't want auth routes:
+// app.use('/api/auth', require('./routes/authRoutes')); 
 
 // Serve React app
 if (process.env.NODE_ENV === 'production') {
