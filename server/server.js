@@ -1,4 +1,4 @@
-// server/server.js (Clean version)
+// server/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -11,24 +11,40 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/timekeeper', {
+// Connect to MongoDB - ADD YOUR ACTUAL MONGODB URI HERE
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/timekeeper';
+
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((error) => {
+  console.error('MongoDB connection error:', error);
 });
 
-// API Routes - ONLY keep what you actually need
+// API Routes
 app.use('/api/watches', require('./routes/watchRoutes'));
-// DON'T include this line if you don't want auth routes:
-// app.use('/api/auth', require('./routes/authRoutes')); 
 
-// Serve React app
+// Serve React app only in production and when build exists
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+  const buildPath = path.join(__dirname, '../client/build');
+  console.log('Trying to serve static files from:', buildPath);
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-  });
+  // Check if build directory exists
+  const fs = require('fs');
+  if (fs.existsSync(buildPath)) {
+    app.use(express.static(buildPath));
+    
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(buildPath, 'index.html'));
+    });
+  } else {
+    console.log('Build directory does not exist. Serving API only.');
+    app.get('*', (req, res) => {
+      res.json({ message: 'Time Keeper API is running!' });
+    });
+  }
 }
 
 app.listen(PORT, () => {
