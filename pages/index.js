@@ -39,7 +39,7 @@ const styles = {
   },
   card: {
     width: 320,
-    minHeight: 400, // Increased height
+    minHeight: 400,
     borderRadius: 12,
     padding: 14,
     background: "#fff",
@@ -47,7 +47,7 @@ const styles = {
     boxShadow: "0 6px 20px rgba(2,6,23,0.04)",
     display: "flex",
     flexDirection: "column",
-    gap: 12,
+    justifyContent: "space-between",
   },
   imageWrapper: {
     width: "100%",
@@ -214,13 +214,18 @@ export default function Index() {
                 />
               </div>
 
+              {/* Details pinned to bottom */}
               <div>
                 <div style={styles.nameRow}>
                   <h3 style={styles.name}>{it.name}</h3>
                   <div style={styles.price}>₹{Number(it.price).toLocaleString("en-IN")}</div>
                 </div>
 
-                <div>{it.model && <div style={styles.modelText}>{it.model ? it.model : "N/A"} {it.subModel ? `• ${it.subModel}` : ""}</div>} </div>
+                {it.model && (
+                  <div style={styles.modelText}>
+                    {it.model || "N/A"} {it.subModel ? `• ${it.subModel}` : ""}
+                  </div>
+                )}
 
                 <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={styles.smallText}>Model ID: {it.modelId || "N/A"}</div>
@@ -233,3 +238,4 @@ export default function Index() {
     </div>
   );
 }
+
