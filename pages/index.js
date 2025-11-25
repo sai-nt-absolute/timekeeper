@@ -99,6 +99,7 @@ export default function Index() {
             name: it.name || "",
             model: it.model || "",
             modelId: it.modelId || "",
+            subModel: it.subModel || "",
             price: typeof it.price === "number" ? it.price : parseFloat(String(it.price).replace(/[^0-9.]/g, "")) || 0,
             image: it.image || ""
           }));
