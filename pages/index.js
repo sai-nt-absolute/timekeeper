@@ -31,13 +31,14 @@ const styles = {
     fontWeight: 600,
   },
   grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+    display: "flex",
+    flexWrap: "wrap",
     gap: 18,
+    justifyContent: "flex-start",
     width: "100%",
   },
   card: {
-    width: "100%",
+    width: 320,
     minHeight: 400, // Increased height
     borderRadius: 12,
     padding: 14,
@@ -48,12 +49,21 @@ const styles = {
     flexDirection: "column",
     gap: 12,
   },
-  image: { width: "100%", height: 200, objectFit: "cover", borderRadius: 10, background: "#f3f4f6" },
+  imageWrapper: {
+    flex: "0 0 50%", // Image takes 50% of card height
+    width: "100%",
+    overflow: "hidden",
+    borderRadius: 10,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover", // Fill container without distortion
+  },
   nameRow: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 },
   name: { fontSize: 16, fontWeight: 700, color: "#0f172a", margin: 0 },
   modelText: { fontSize: 13, color: "#475569", marginTop: 4 },
   price: { fontSize: 18, color: "#059669", fontWeight: 800 },
-  metaRow: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 },
   smallText: { fontSize: 12, color: "#6b7280" },
   empty: { padding: 28, textAlign: "center", color: "#6b7280" },
   controlsRight: { display: "flex", gap: 12, alignItems: "center" }
@@ -192,15 +202,17 @@ export default function Index() {
         <div style={styles.grid}>
           {filtered.map((it) => (
             <div key={it.id} style={styles.card}>
-              <img
-                src={it.image || "/placeholder.png"}
-                alt={it.name}
-                style={styles.image}
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = "/placeholder.png";
-                }}
-              />
+              <div style={styles.imageWrapper}>
+                <img
+                  src={it.image || "/placeholder.png"}
+                  alt={it.name}
+                  style={styles.image}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "/placeholder.png";
+                  }}
+                />
+              </div>
 
               <div>
                 <div style={styles.nameRow}>
@@ -212,7 +224,6 @@ export default function Index() {
 
                 <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={styles.smallText}>Model ID: {it.modelId || "N/A"}</div>
-                  {/* Removed "New" badge */}
                 </div>
               </div>
             </div>
