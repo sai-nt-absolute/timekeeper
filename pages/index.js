@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>Watch Marketplace</h1>
+      <h1>Timekeeper</h1>
 
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {watches.map(w => (
