@@ -1,12 +1,13 @@
+
 import { useEffect, useState } from "react";
 
 const styles = {
   page: {
-    maxWidth: 1200,
+    maxWidth: "100%", // Full width
     margin: "28px auto",
     padding: 20,
     fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    background: "#f8fafc",
+    background: "#fff", // Removed bluish background
   },
   header: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 20 },
   title: { margin: 0, fontSize: 26, color: "#0f172a", letterSpacing: "-0.2px" },
@@ -29,9 +30,15 @@ const styles = {
     cursor: "pointer",
     fontWeight: 600,
   },
-  grid: { display: "flex", gap: 18, flexWrap: "wrap" },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+    gap: 18,
+    width: "100%",
+  },
   card: {
-    width: 320,
+    width: "100%",
+    minHeight: 400, // Increased height
     borderRadius: 12,
     padding: 14,
     background: "#fff",
@@ -49,7 +56,6 @@ const styles = {
   metaRow: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 },
   smallText: { fontSize: 12, color: "#6b7280" },
   empty: { padding: 28, textAlign: "center", color: "#6b7280" },
-  badge: { padding: "4px 8px", borderRadius: 999, background: "#eef2ff", color: "#3730a3", fontSize: 12, fontWeight: 700 },
   controlsRight: { display: "flex", gap: 12, alignItems: "center" }
 };
 
@@ -164,7 +170,7 @@ export default function Index() {
               <option value="price_desc">Price ↓</option>
             </select>
 
-            <button onClick={clearFilters} style={{ cursor: "pointer" }}>Clear</button>
+            <button onClick={clearFilters} style={{ ...styles.input, cursor: "pointer" }}>Clear</button>
 
             <button
               onClick={() => (window.location.href = "/admin")}
@@ -205,8 +211,8 @@ export default function Index() {
                 {it.model && <div style={styles.modelText}>{it.model} {it.modelId ? `• ${it.modelId}` : ""}</div>}
 
                 <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div style={styles.smallText}>ID: {it.id}</div>
-                  <div style={styles.badge}>New</div>
+                  <div style={styles.smallText}>Model ID: {it.modelId || "N/A"}</div>
+                  {/* Removed "New" badge */}
                 </div>
               </div>
             </div>
