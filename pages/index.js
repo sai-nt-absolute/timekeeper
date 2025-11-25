@@ -59,7 +59,6 @@ const styles = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    maxHeight: 200,
   },
   nameRow: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 },
   name: { fontSize: 16, fontWeight: 700, color: "#0f172a", margin: 0 },
