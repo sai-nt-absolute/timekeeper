@@ -204,7 +204,11 @@ export default function Index() {
             <div key={it.id} style={styles.card}>
               <div style={styles.imageWrapper}>
                 <img
-                  src={it.image || "/placeholder.png"}
+                  src={
+                    it.image.startsWith("http")
+                      ? it.image // If it's a URL, use as-is
+                      : `data:image/jpeg;base64,${it.image}` // If it's Base64, prepend prefix
+                  }
                   alt={it.name}
                   style={styles.image}
                   onError={(e) => {
