@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const { name, model, subModel, modelId, price, image } = req.body;
-    const w = await Watch.create({ name, price, image });
+    const w = await Watch.create({ name, model, subModel, modelId, price, image });
     return res.status(201).json(w);
   }
 
