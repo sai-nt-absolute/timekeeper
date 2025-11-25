@@ -177,7 +177,13 @@ export default function Admin() {
     }
     setImageFile(file);
     const reader = new FileReader();
-    reader.onload = (ev) => setImagePreviewUrl(ev.target.result);
+    // reader.onload = (ev) => setImagePreviewUrl(ev.target.result);
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result; // "data:image/png;base64,iVBORw0KGgo..."
+      setImagePreviewUrl(dataUrl); // For preview
+      const base64String = dataUrl.split(",")[1]; // Strip prefix
+      setForm((prev) => ({ ...prev, image: base64String })); // Save Base64 in form
+    };
     reader.readAsDataURL(file);
   };
 
