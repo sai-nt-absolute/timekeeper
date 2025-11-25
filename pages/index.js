@@ -50,7 +50,6 @@ const styles = {
     gap: 12,
   },
   imageWrapper: {
-    flex: "0 0 50%", // Image takes 50% of card height
     width: "100%",
     overflow: "hidden",
     borderRadius: 10,
