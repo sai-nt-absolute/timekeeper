@@ -67,7 +67,7 @@ export default function Admin() {
   const [showPassword, setShowPassword] = useState(false);
   const [loadingLogin, setLoadingLogin] = useState(false);
 
-  const [form, setForm] = useState({ name: "", price: "", image: "" });
+  const [form, setForm] = useState({ name: "", price: "", image: "", model: "", modelId: "", subModel: ""});
   const [imageFile, setImageFile] = useState(null); // File object
   const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // preview for file or url
   const [imageMode, setImageMode] = useState("url"); // "url" or "file"
@@ -156,7 +156,7 @@ export default function Admin() {
       }
 
       setStatus({ type: "success", msg: "Watch added!" });
-      setForm({ name: "", price: "", image: "" });
+      setForm({ name: "", price: "", image: "", model: "", modelId: "", subModel: ""});
       setImageFile(null);
       setImagePreviewUrl("");
       if (fileInputRef.current) fileInputRef.current.value = "";
