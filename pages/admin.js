@@ -127,36 +127,32 @@ export default function Admin() {
       return;
     }
 
-    setSubmitting(true);
+    
+  setSubmitting(true);
     try {
-      let res;
-      if (imageMode === "url") {
-        res = await fetch("/api/watches", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form)
-        });
-      } else {
-        const data = new FormData();
-        data.append("name", form.name);
-        data.append("model", form.model);
-        data.append("subModel", form.subModel);
-        data.append("modelId", form.modelId);
-        data.append("price", form.price);
-        data.append("imageFile", imageFile);
-        res = await fetch("/api/watches", {
-          method: "POST",
-          body: data
-        });
-      }
-
+      // Build payload for both modes
+      const payload = {
+        name: form.name,
+        model: form.model,
+        subModel: form.subModel,
+        modelId: form.modelId,
+        price: form.price,
+        image: form.image // This will be URL if imageMode === "url", Base64 if imageMode === "file"
+      };
+    
+      const res = await fetch("/api/watches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    
       if (!res.ok) {
         const err = await res.text();
         throw new Error(err || "Server error");
       }
-
+    
       setStatus({ type: "success", msg: "Watch added!" });
-      setForm({ name: "", price: "", image: "", model: "", modelId: "", subModel: ""});
+      setForm({ name: "", price: "", image: "", model: "", modelId: "", subModel: "" });
       setImageFile(null);
       setImagePreviewUrl("");
       if (fileInputRef.current) fileInputRef.current.value = "";
