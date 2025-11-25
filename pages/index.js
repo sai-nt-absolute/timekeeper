@@ -164,7 +164,7 @@ export default function Index() {
               <option value="price_desc">Price ↓</option>
             </select>
 
-            <button onClick={clearFilters} style={{ ...cursor: "pointer" }}>Clear</button>
+            <button onClick={clearFilters} style={{ cursor: "pointer" }}>Clear</button>
 
             <button
               onClick={() => (window.location.href = "/admin")}
