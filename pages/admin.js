@@ -258,10 +258,10 @@ export default function Admin() {
       <h2 style={styles.title}>Add Watch</h2>
 
       <div style={styles.formRow}>
-        <label style={styles.label} htmlFor="watch-name">Watch Name</label>
+        <label style={styles.label} htmlFor="Brand-name">Watch Name</label>
         <input
           id="watch-name"
-          placeholder="e.g. Chrono Classic"
+          placeholder="e.g. Casio"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           onKeyDown={onFormKeyDown}
@@ -272,10 +272,52 @@ export default function Admin() {
       </div>
 
       <div style={styles.formRow}>
-        <label style={styles.label} htmlFor="watch-price">Price</label>
+        <label style={styles.label} htmlFor="Model-name">Model Name</label>
+        <input
+          id="=model-name"
+          placeholder="e.g. G-shock"
+          value={form.model}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onKeyDown={onFormKeyDown}
+          onFocus={() => setFocused("name")}
+          onBlur={() => setFocused("")}
+          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+        />
+      </div>
+
+      <div style={styles.formRow}>
+        <label style={styles.label} htmlFor="Sub-Model">Sub Model</label>
+        <input
+          id="sub-model"
+          placeholder="e.g. Mud-Master"
+          value={form.subModel}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onKeyDown={onFormKeyDown}
+          onFocus={() => setFocused("name")}
+          onBlur={() => setFocused("")}
+          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+        />
+      </div>
+
+      <div style={styles.formRow}>
+        <label style={styles.label} htmlFor="Model Id">Model Id</label>
+        <input
+          id="model-id"
+          placeholder="e.g. GWGB1000EC1A"
+          value={form.modelId}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onKeyDown={onFormKeyDown}
+          onFocus={() => setFocused("name")}
+          onBlur={() => setFocused("")}
+          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+        />
+      </div>
+
+      <div style={styles.formRow}>
+        <label style={styles.label} htmlFor="Price">Price</label>
         <input
           id="watch-price"
-          placeholder="e.g. 199.99"
+          placeholder="e.g. 10000"
           value={form.price}
           onChange={(e) => setForm({ ...form, price: e.target.value })}
           onKeyDown={onFormKeyDown}
