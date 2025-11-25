@@ -139,6 +139,9 @@ export default function Admin() {
       } else {
         const data = new FormData();
         data.append("name", form.name);
+        data.append("model", form.model);
+        data.append("subModel", form.subModel);
+        data.append("modelId", form.modelId);
         data.append("price", form.price);
         data.append("imageFile", imageFile);
         res = await fetch("/api/watches", {
@@ -277,11 +280,11 @@ export default function Admin() {
           id="=model-name"
           placeholder="e.g. G-shock"
           value={form.model}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={(e) => setForm({ ...form, model: e.target.value })}
           onKeyDown={onFormKeyDown}
-          onFocus={() => setFocused("name")}
+          onFocus={() => setFocused("model")}
           onBlur={() => setFocused("")}
-          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+          style={{ ...styles.input, ...(focused === "model" ? styles.inputFocus : {}) }}
         />
       </div>
 
@@ -291,11 +294,11 @@ export default function Admin() {
           id="sub-model"
           placeholder="e.g. Mud-Master"
           value={form.subModel}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={(e) => setForm({ ...form, subModel: e.target.value })}
           onKeyDown={onFormKeyDown}
-          onFocus={() => setFocused("name")}
+          onFocus={() => setFocused("subModel")}
           onBlur={() => setFocused("")}
-          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+          style={{ ...styles.input, ...(focused === "subModel" ? styles.inputFocus : {}) }}
         />
       </div>
 
@@ -305,11 +308,11 @@ export default function Admin() {
           id="model-id"
           placeholder="e.g. GWGB1000EC1A"
           value={form.modelId}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={(e) => setForm({ ...form, modelId: e.target.value })}
           onKeyDown={onFormKeyDown}
-          onFocus={() => setFocused("name")}
+          onFocus={() => setFocused("modelId")}
           onBlur={() => setFocused("")}
-          style={{ ...styles.input, ...(focused === "name" ? styles.inputFocus : {}) }}
+          style={{ ...styles.input, ...(focused === "modelId" ? styles.inputFocus : {}) }}
         />
       </div>
 
