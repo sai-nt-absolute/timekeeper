@@ -219,7 +219,7 @@ export default function Index() {
                   <div style={styles.price}>₹{Number(it.price).toLocaleString("en-IN")}</div>
                 </div>
 
-                {it.model && <div style={styles.modelText}>{it.model ? it.model : "N/A"} {it.subModel ? `• ${it.subModel}` : ""}</div>}
+                <div>{it.model && <div style={styles.modelText}>{it.model ? it.model : "N/A"} {it.subModel ? `• ${it.subModel}` : ""}</div>} </div>
 
                 <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={styles.smallText}>Model ID: {it.modelId || "N/A"}</div>
