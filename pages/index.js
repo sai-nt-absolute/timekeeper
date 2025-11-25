@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 const styles = {
   page: {
-    maxWidth: "100%", // Full width
+    maxWidth: "100%",
     margin: "28px auto",
     padding: 20,
     fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    background: "#fff", // Removed bluish background
+    background: "#fff",
   },
   header: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 20 },
   title: { margin: 0, fontSize: 26, color: "#0f172a", letterSpacing: "-0.2px" },
@@ -53,11 +53,13 @@ const styles = {
     width: "100%",
     overflow: "hidden",
     borderRadius: 10,
+    flexShrink: 0,
   },
   image: {
     width: "100%",
     height: "100%",
-    objectFit: "cover", // Fill container without distortion
+    objectFit: "cover",
+    maxHeight: 200,
   },
   nameRow: { display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 },
   name: { fontSize: 16, fontWeight: 700, color: "#0f172a", margin: 0 },
@@ -93,7 +95,6 @@ export default function Index() {
       .then((data) => {
         if (!cancelled) {
           const arr = Array.isArray(data) ? data : (data.watches || []);
-          // normalize id field to id
           const norm = arr.map((it) => ({
             id: it._id || it.id,
             name: it.name || "",
@@ -238,4 +239,3 @@ export default function Index() {
     </div>
   );
 }
-
