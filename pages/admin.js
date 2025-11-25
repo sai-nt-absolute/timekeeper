@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const styles = {
   container: {
@@ -47,7 +47,18 @@ const styles = {
   error: { color: "#dc2626" },
   hint: { fontSize: 12, color: "#9ca3af", marginTop: 6 },
   imagePreview: { width: 92, height: 92, borderRadius: 8, objectFit: "cover", border: "1px solid #e5e7eb" },
-  toggleGroup: { display: "flex", gap: 8, marginBottom: 12 }
+  toggleGroup: { display: "flex", gap: 8, marginBottom: 12 },
+  fileButton: {
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid #e5e7eb",
+    background: "#fff",
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 8,
+  },
+  fileName: { fontSize: 13, color: "#6b7280", marginLeft: 8 }
 };
 
 export default function Admin() {
@@ -60,6 +71,8 @@ export default function Admin() {
   const [imageFile, setImageFile] = useState(null); // File object
   const [imagePreviewUrl, setImagePreviewUrl] = useState(""); // preview for file or url
   const [imageMode, setImageMode] = useState("url"); // "url" or "file"
+
+  const fileInputRef = useRef(null);
 
   const [focused, setFocused] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -76,9 +89,7 @@ export default function Admin() {
       if (form.image && !/^https?:\/\//i.test(form.image)) return "Image URL must start with http:// or https://";
     } else {
       if (!imageFile) return "Please select an image file.";
-      // optional: limit file size to 5MB
       if (imageFile.size > 5 * 1024 * 1024) return "Image file must be under 5 MB.";
-      // optional: allow only image mime types
       if (!imageFile.type.startsWith("image/")) return "Selected file must be an image.";
     }
 
@@ -120,19 +131,16 @@ export default function Admin() {
     try {
       let res;
       if (imageMode === "url") {
-        // send JSON as before
         res = await fetch("/api/watches", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form)
         });
       } else {
-        // send multipart/form-data with file
         const data = new FormData();
         data.append("name", form.name);
         data.append("price", form.price);
         data.append("imageFile", imageFile);
-        // backend should handle multipart upload and store/return URL
         res = await fetch("/api/watches", {
           method: "POST",
           body: data
@@ -148,6 +156,7 @@ export default function Admin() {
       setForm({ name: "", price: "", image: "" });
       setImageFile(null);
       setImagePreviewUrl("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch (err) {
       setStatus({ type: "error", msg: err.message || "Failed to add watch." });
     } finally {
@@ -164,31 +173,25 @@ export default function Admin() {
       return;
     }
     setImageFile(file);
-    // create local preview
     const reader = new FileReader();
     reader.onload = (ev) => setImagePreviewUrl(ev.target.result);
     reader.readAsDataURL(file);
   };
 
-  // helpers for quick sample
   const fillSampleImage = () => {
     if (imageMode === "url") {
       const sample = "https://images.unsplash.com/photo-1517059224940-d4af9eec41e6?w=800&q=80";
       setForm((f) => ({ ...f, image: sample }));
       setImagePreviewUrl(sample);
     } else {
-      // cannot programmatically set file input for security; just set a preview suggestion
       setStatus({ type: "error", msg: "Select a file from your device for upload." });
       setTimeout(() => setStatus(null), 2500);
     }
   };
 
-  // allow Enter to submit login when focused on password
   const onPasswordKeyDown = (e) => {
     if (e.key === "Enter") login();
   };
-
-  // allow Enter to submit form when pressing Enter in any text field
   const onFormKeyDown = (e) => {
     if (e.key === "Enter") addWatch();
   };
@@ -336,31 +339,62 @@ export default function Admin() {
         ) : (
           <>
             <label style={styles.label} htmlFor="watch-image-file">Select Image File</label>
-            <div style={styles.row}>
+
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              {/* hidden native input */}
               <input
+                ref={fileInputRef}
                 id="watch-image-file"
                 type="file"
                 accept="image/*"
                 onChange={onFileChange}
-                style={{ flex: 1 }}
+                style={{
+                  position: "absolute",
+                  left: "-9999px",
+                  width: "1px",
+                  height: "1px",
+                  opacity: 0,
+                  pointerEvents: "none"
+                }}
               />
+
+              {/* visible custom button */}
               <button
                 type="button"
-                onClick={() => {
-                  setImageFile(null);
-                  setImagePreviewUrl("");
-                }}
-                style={styles.smallBtn}
+                onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                style={styles.fileButton}
               >
-                Clear
+                <span aria-hidden>📁</span>
+                <span style={{ fontSize: 14, color: "#111827" }}>
+                  {imageFile ? "Change file" : "Choose file"}
+                </span>
               </button>
+
+              {/* filename display */}
+              <div style={styles.fileName}>
+                {imageFile ? imageFile.name : "No file selected"}
+              </div>
+
+              {/* clear button */}
+              {imageFile && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImageFile(null);
+                    setImagePreviewUrl("");
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                  }}
+                  style={styles.smallBtn}
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </>
         )}
 
         <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 12 }}>
           {imagePreviewUrl ? (
-            // eslint-disable-next-line jsx-a11y/img-redundant-alt
             <img src={imagePreviewUrl} alt="Preview" style={styles.imagePreview} onError={(e) => (e.currentTarget.style.display = "none")} />
           ) : (
             <div style={{ ...styles.imagePreview, display: "flex", alignItems: "center", justifyContent: "center", color: "#9ca3af", fontSize: 12 }}>
