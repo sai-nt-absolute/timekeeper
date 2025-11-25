@@ -34,7 +34,7 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     gap: 18,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     width: "100%",
   },
   card: {
