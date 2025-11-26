@@ -8,8 +8,7 @@
     linear-gradient(90deg, white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
     linear-gradient(white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
     black;
-  background-attachment: fixed; /* ✅ Keeps background fixed */
-}
+  background-attachment: fixed;
 
 .container {
   max-width: 1200px;
@@ -92,6 +91,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.watchDetail{
+  margin-top: 14px;
 }
 
 .nameRow {
