@@ -8,7 +8,7 @@
     linear-gradient(90deg, white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
     linear-gradient(white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
     black;
-  background-attachment: fixed;
+  background-attachment: fixed; /* ✅ Keeps background fixed */
 }
 
 .container {
@@ -34,23 +34,31 @@
   gap: 12px;
 }
 
-.filters input,
-.filters select,
-.filters button {
+.filters.show {
+  display: flex;
+}
+
+.input {
   padding: 8px 12px;
   border-radius: 10px;
   border: 1px solid #e6e9ee;
   font-size: 14px;
+  outline: none;
+  background: #fff;
 }
 
-.primary-btn {
-  background: #4f46e5;
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
+.primaryBtn {
   padding: 10px 14px;
   border-radius: 10px;
+  border: none;
+  background: #4f46e5;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.filterToggle {
+  display: none;
 }
 
 .grid {
@@ -68,19 +76,36 @@
   background: #fff;
   border: 1px solid #e6e9ee;
   box-shadow: 0 6px 20px rgba(2,6,23,0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.image-wrapper img {
+.imageWrapper {
   width: 100%;
-  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.name-row {
+.nameRow {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 8px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
 }
 
 .price {
@@ -89,13 +114,13 @@
   font-weight: 800;
 }
 
-.model-text {
+.modelText {
   font-size: 13px;
   color: #475569;
   margin-top: 4px;
 }
 
-.small-text {
+.smallText {
   font-size: 12px;
   color: #6b7280;
 }
@@ -115,7 +140,7 @@
   .filters.show {
     display: flex;
   }
-  .filter-toggle {
+  .filterToggle {
     display: block;
     padding: 10px;
     background: #4f46e5;
