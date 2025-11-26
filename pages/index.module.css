@@ -9,10 +9,6 @@
     linear-gradient(white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
     black;
   background-attachment: fixed;
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .header {
