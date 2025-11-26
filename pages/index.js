@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import "./index.module.css";
+import styles from "./index.module.css";
 
 export default function Index() {
   const [items, setItems] = useState([]);
@@ -79,57 +79,60 @@ export default function Index() {
   };
 
   return (
-    <div className="page">
-      <div className="container">
-        <div className="header">
-          <h1 className="title">Timekeeper</h1>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Timekeeper</h1>
 
           {/* Mobile toggle */}
-          <button className="filter-toggle" onClick={() => setShowFilters(!showFilters)}>
+          <button className={styles.filterToggle} onClick={() => setShowFilters(!showFilters)}>
             Advanced Filters
           </button>
 
           {/* Filters */}
-          <div className={`filters ${showFilters ? "show" : ""}`}>
+          <div className={`${styles.filters} ${showFilters ? styles.show : ""}`}>
             <input
               placeholder="Search name or model..."
               value={q}
               onChange={(e) => setQ(e.target.value)}
+              className={styles.input}
             />
             <input
               placeholder="Min ₹"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
+              className={styles.input}
             />
             <input
               placeholder="Max ₹"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
+              className={styles.input}
             />
-            <select value={sort} onChange={(e) => setSort(e.target.value)}>
+            <select value={sort} onChange={(e) => setSort(e.target.value)} className={styles.input}>
               <option value="name_asc">Name ↑</option>
               <option value="name_desc">Name ↓</option>
               <option value="price_asc">Price ↑</option>
               <option value="price_desc">Price ↓</option>
             </select>
-            <button onClick={clearFilters}>Clear</button>
-            <button onClick={() => (window.location.href = "/admin")} className="primary-btn">
+            <button onClick={clearFilters} className={styles.input}>Clear</button>
+            <button onClick={() => (window.location.href = "/admin")} className={styles.primaryBtn}>
               Add Watch
             </button>
           </div>
         </div>
 
         {loading ? (
-          <div className="empty">Loading watches…</div>
+          <div className={styles.empty}>Loading watches…</div>
         ) : error ? (
-          <div className="empty">Error loading watches: {error}</div>
+          <div className={styles.empty}>Error loading watches: {error}</div>
         ) : filtered.length === 0 ? (
-          <div className="empty">No watches found. Try clearing filters.</div>
+          <div className={styles.empty}>No watches found. Try clearing filters.</div>
         ) : (
-          <div className="grid">
+          <div className={styles.grid}>
             {filtered.map((it) => (
-              <div key={it.id} className="card">
-                <div className="image-wrapper">
+              <div key={it.id} className={styles.card}>
+                <div className={styles.imageWrapper}>
                   <img
                     src={
                       it.image.startsWith("http")
@@ -141,19 +144,20 @@ export default function Index() {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = "/placeholder.png";
                     }}
+                    className={styles.image}
                   />
                 </div>
                 <div>
-                  <div className="name-row">
-                    <h3>{it.name}</h3>
-                    <div className="price">₹{Number(it.price).toLocaleString("en-IN")}</div>
+                  <div className={styles.nameRow}>
+                    <h3 className={styles.name}>{it.name}</h3>
+                    <div className={styles.price}>₹{Number(it.price).toLocaleString("en-IN")}</div>
                   </div>
                   {it.model && (
-                    <div className="model-text">
+                    <div className={styles.modelText}>
                       {it.model || "N/A"} {it.subModel ? `• ${it.subModel}` : ""}
                     </div>
                   )}
-                  <div className="small-text">Model ID: {it.modelId || "N/A"}</div>
+                  <div className={styles.smallText}>Model ID: {it.modelId || "N/A"}</div>
                 </div>
               </div>
             ))}
