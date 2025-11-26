@@ -7,14 +7,11 @@ const styles = {
     margin: "28px auto",
     padding: 20,
     fontFamily: "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    --dot-bg: white;
-    --dot-color: black;
-    --dot-size: 1.2px;
-    --dot-space: 22px;
-  	background:
-  		linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
-  		linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
-  		var(--dot-color);
+    background: `
+      linear-gradient(90deg, white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
+      linear-gradient(white calc(22px - 1.2px), transparent 1%) center / 22px 22px,
+      black
+    `
   },
   header: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 20 },
   title: { margin: 0, fontSize: 26, color: "#0f172a", letterSpacing: "-0.2px" },
