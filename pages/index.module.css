@@ -22,9 +22,11 @@
 }
 
 .title {
-  font-size: 28px;
+  font-size: 50px;
   color: #0f172a;
   font-family: 'Jersey 15', sans-serif;
+  letter-spacing: 5px;
+  text-transform: uppercase;
 }
 
 .filters {
