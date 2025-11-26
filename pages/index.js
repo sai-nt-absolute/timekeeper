@@ -147,7 +147,7 @@ export default function Index() {
                     className={styles.image}
                   />
                 </div>
-                <div>
+                <div className={styles.watchDetail}>
                   <div className={styles.nameRow}>
                     <h3 className={styles.name}>{it.name}</h3>
                     <div className={styles.price}>₹{Number(it.price).toLocaleString("en-IN")}</div>
