@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import "./index.css";
+import "./index.module.css";
 
 export default function Index() {
   const [items, setItems] = useState([]);
